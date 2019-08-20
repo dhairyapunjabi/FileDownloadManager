@@ -49,7 +49,6 @@ func (concurrent_download ConcurrentDownload) DownloadUrls() DownloadId {
 		for _, url := range concurrent_download.Urls {
 			reqChan <- url
 		}
-		DownloadStatusMap[downloadId.Id] = StatusResponse{downloadId.Id, start_time.String(), time.Now().String(), "SUCCESSFUL", "CONCURRENT", currentlyDownloadedFiles}
 		return
 	}()
 
@@ -107,6 +106,9 @@ func Worker(reqChan chan string, noOfUrls uint64, id string, counter *uint64) {
 			}
 		}
 		if atomic.LoadUint64(counter) == noOfUrls {
+			temp_status := DownloadStatusMap[id]
+			temp_status.Status = "SUCCESSFUL"
+			DownloadStatusMap[id] = temp_status
 			close(reqChan)
 			return
 		}
