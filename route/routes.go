@@ -15,4 +15,7 @@ func RouteRequest(server *http.ServeMux) {
 
 	//handle serial and concurrent downloads
 	server.HandleFunc("/downloads", controller.DownloadManager)
+
+	//handle status check api
+	server.HandleFunc("/downloads/", controller.StatusChecker)
 }
