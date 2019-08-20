@@ -99,6 +99,7 @@ func Worker(reqChan chan string, noOfUrls uint64, id string, counter *uint64) {
 			_ = DownloadFile(url)
 			temp_status := DownloadStatusMap[id]
 			temp_status.Files = currentlyDownloadedFiles
+			temp_status.EndTime = time.Now().String()
 			DownloadStatusMap[id] = temp_status
 			atomic.AddUint64(counter, 1)
 			if !exists {
