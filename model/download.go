@@ -32,6 +32,12 @@ type DownloadId struct {
 	Id string
 }
 
+var DownloadStatusMap = make(map[string]StatusResponse)
+var UrlPathMap = make(map[string]string)
+
+//DownloadStatusMap = make(map[string]StatusResponse)
+//UrlPathMap = make(map[string]string)
+
 func DownloadFile(url string) error {
 	filepath := "/tmp" + "/" + GenerateUuid()
 	// Get the data
@@ -50,6 +56,7 @@ func DownloadFile(url string) error {
 
 	// Write the body to file
 	_, err = io.Copy(out, resp.Body)
+	UrlPathMap[url] = filepath
 	return err
 }
 

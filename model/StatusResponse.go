@@ -1,8 +1,4 @@
-package controller
-
-import (
-	"encoding/json"
-)
+package model
 
 type StatusResponse struct {
 	ID           string            `json:"id"`
